@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/Users/mac/Documents/workspace_htchub/HDKBasicSample_dependOnCustomization/app/src/main/res/values-v21/dimens.xml -->
+    <eat-comment/>
+    <dimen name="activity_vertical_margin">18dp</dimen>
+    <dimen name="activity_vertical_margin_small">0dp</dimen>
+    <dimen name="header_margin">16dp</dimen>
+    <!-- From: file:/Users/mac/Documents/workspace_htchub/HDKBasicSample_dependOnCustomization/app/src/main/res/values-v21/styles.xml -->
+    <eat-comment/>
+    <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar"/>
+</resources>

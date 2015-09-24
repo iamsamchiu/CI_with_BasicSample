@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/Users/mac/Documents/workspace_htchub/HDKBasicSample_dependOnCustomization/lib-project/build/intermediates/bundles/debug/res/values/values.xml -->
+    <eat-comment/>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">22dp</dimen>
+    <dimen name="activity_vertical_margin_small">18dp</dimen>
+    <dimen name="buttonTextSize">22sp</dimen>
+    <dimen name="header_margin">18dp</dimen>
+    <string name="app_name">Basic unittest sample</string>
+    <string name="dob_label">Your date of birth:</string>
+    <string name="email_hint">Enter your Email</string>
+    <string name="email_label">Your Email address:</string>
+    <string name="name_hint">Enter your name</string>
+    <string name="name_label">Your name:</string>
+    <string name="revert">Revert</string>
+    <string name="save">Save</string>
+    <string name="settings_title">My Settings</string>
+    <style name="AppTheme" parent="android:Theme.Light.NoTitleBar"/>
+</resources>

@@ -1,0 +1,69 @@
+apply plugin: 'maven-publish'
+
+publishing {
+    publications {
+        repositories.maven {
+            /*
+            * Several ways to configure maven credential properties:
+            * 1.setting up maven server configuration and place these settings into USER_HOME/.gradle/gradle.properties
+            * ex:
+            * MAVEN_SERVERHOST=http://prebuild-repositories.htc.com.tw:8081/artifactory/simple/HDK-release
+            * MAVEN_USERNAME=YOUR_HTC_ACCOUNT
+            * MAVEN_PASSWORD=YOUR_HTC_ACCOUNT_PASSWOARD
+            * 
+            * 2.place above settings into [YOUR_WORKSPACE]/gradle.properties 
+            * Be noticed that you should NOT upload your password to any version control server (git).
+            *
+            * 3.add parameters for each properties on jenkins if your job will be executed on jenkins.
+            */ 
+            url System.getenv("MAVEN_SERVERHOST") ?: "${project.getProperty('MAVEN_SERVERHOST')}"
+            credentials {
+                username System.getenv("MAVEN_USERNAME") ?: "${project.getProperty('MAVEN_USERNAME')}"
+                password System.getenv("MAVEN_PASSWORD") ?: "${project.getProperty('MAVEN_PASSWORD')}"
+            }
+        }
+        maven(MavenPublication) {
+            groupId project.HDK_MAVEN_GROUPID
+            artifactId project.HDK_MAVEN_ARTIFACTID
+            version project.HDK_MAVEN_VERSION
+            artifact "${project.buildDir}/outputs/aar/${project.archivesBaseName}-release.aar"
+            println 'start publish aar to maven>>'
+            println 'groupId:' + groupId
+            println 'artifactId:' + artifactId
+            println 'version:' + version
+
+            pom.withXml {
+                def dependenciesNode = asNode().appendNode('dependencies')
+                configurations.compile.allDependencies.each {
+                    if(it instanceof org.gradle.api.internal.artifacts.dependencies.DefaultExternalModuleDependency){
+                        def dependencyNode = dependenciesNode.appendNode('dependency')
+                        dependencyNode.appendNode('groupId', it.group)
+                        dependencyNode.appendNode('artifactId', it.name)
+                        dependencyNode.appendNode('version', it.version)
+                    }
+                }
+                
+                def scm = asNode().appendNode('scm')
+                scm.appendNode('url', 'https://hichub.htc.com/HDK/HTC-Lib0-Customization.git')
+                scm.appendNode('connection', 'scm:https://hichub.htc.com/HDK/HTC-Lib0-Customization.git')
+                scm.appendNode('developerConnection', 'scm:ssh://git@hichub.htc.com:HDK/HTC-Lib0-Customization.git')
+                scm.appendNode('tag', version)
+            }
+
+        }
+    }
+}
+
+
+task publishAndTag(dependsOn: ':publish'){
+	def tag_command = "git tag -a v${project.HDK_MAVEN_VERSION} -m version-${project.HDK_MAVEN_VERSION}"
+	println 'add tag command:' + tag_command
+	def proc = tag_command.execute()
+	println 'add tag:done!'+proc.text.trim()
+	
+	def tag_push_command = "git push origin v${project.HDK_MAVEN_VERSION}"
+	println 'push tag command:' + tag_push_command
+	def proc2 = tag_push_command.execute()
+	println 'push tag to git:done!'+proc2.text.trim()
+	
+}

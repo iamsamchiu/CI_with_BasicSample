@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/Users/mac/Documents/workspace_htchub/HDKBasicSample_dependOnCustomization/lib-project/build/intermediates/bundles/debug/res/values-v21/values-v21.xml -->
+    <eat-comment/>
+    <dimen name="activity_vertical_margin">18dp</dimen>
+    <dimen name="activity_vertical_margin_small">0dp</dimen>
+    <dimen name="header_margin">16dp</dimen>
+    <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar"/>
+</resources>
