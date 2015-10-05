@@ -41,7 +41,7 @@ android {
 }
 
 dependencies {
-
+	compile 'com.android.support:support-v4:22.0.0'
     compile 'com.google.android.gms:play-services:7.5.0'
     //compile 'com.google.android.gms:play-services-base:7.5.0'
     // Unit testing dependencies.
