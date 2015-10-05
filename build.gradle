@@ -22,16 +22,13 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:1.2.3'
 
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
+        classpath 'com.jakewharton.sdkmanager:gradle-plugin:0.12.+'
     }
 }
 
 allprojects {
     repositories {
         jcenter()
-        maven{ url "http://prebuild-repositories.htc.com.tw:8081/artifactory/Custom-snapshots-U62Test"}
-        maven{ url "http://prebuild-repositories.htc.com.tw:8081/artifactory/HTC-release"}
-        maven{ url "http://prebuild-repositories.htc.com.tw:8081/artifactory/HICRelease"}
+
     }
 }
