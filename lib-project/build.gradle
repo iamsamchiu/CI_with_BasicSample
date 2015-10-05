@@ -19,7 +19,7 @@ apply plugin: 'jacoco'
 apply from: "${project.rootDir}/publish2maven.gradle"
 
 android {
-    compileSdkVersion 22
+    compileSdkVersion 21
     buildToolsVersion '22.0.1'
     defaultConfig {
         minSdkVersion 17
