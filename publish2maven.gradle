@@ -16,21 +16,31 @@ publishing {
             *
             * 3.add parameters for each properties on jenkins if your job will be executed on jenkins.
             */ 
-            url System.getenv("MAVEN_SERVERHOST") ?: "${project.getProperty('MAVEN_SERVERHOST')}"
-            credentials {
-                username System.getenv("MAVEN_USERNAME") ?: "${project.getProperty('MAVEN_USERNAME')}"
-                password System.getenv("MAVEN_PASSWORD") ?: "${project.getProperty('MAVEN_PASSWORD')}"
-            }
+            if (project.hasProperty("MAVEN_SERVERHOST") && project.hasProperty("MAVEN_USERNAME") && project.hasProperty("MAVEN_PASSWORD")){
+				url System.getenv("MAVEN_SERVERHOST") ?: "${project.getProperty('MAVEN_SERVERHOST')}"
+				
+	            credentials {
+	                username System.getenv("MAVEN_USERNAME") ?: "${project.getProperty('MAVEN_USERNAME')}"
+	                password System.getenv("MAVEN_PASSWORD") ?: "${project.getProperty('MAVEN_PASSWORD')}"
+	            }
+			}else{
+				url System.getenv("MAVEN_SERVERHOST") 
+				
+	            credentials {
+	                username System.getenv("MAVEN_USERNAME") 
+	                password System.getenv("MAVEN_PASSWORD")
+	            }
+			}
+			println 'publish2maven configuration, url:' + url
+			
+
         }
         maven(MavenPublication) {
             groupId project.HDK_MAVEN_GROUPID
             artifactId project.HDK_MAVEN_ARTIFACTID
             version project.HDK_MAVEN_VERSION
             artifact "${project.buildDir}/outputs/aar/${project.archivesBaseName}-release.aar"
-            println 'start publish aar to maven>>'
-            println 'groupId:' + groupId
-            println 'artifactId:' + artifactId
-            println 'version:' + version
+   
 
             pom.withXml {
                 def dependenciesNode = asNode().appendNode('dependencies')
@@ -57,13 +67,9 @@ publishing {
 
 task publishAndTag(dependsOn: ':publish'){
 	def tag_command = "git tag -a v${project.HDK_MAVEN_VERSION} -m version-${project.HDK_MAVEN_VERSION}"
-	println 'add tag command:' + tag_command
 	def proc = tag_command.execute()
-	println 'add tag:done!'+proc.text.trim()
-	
 	def tag_push_command = "git push origin v${project.HDK_MAVEN_VERSION}"
-	println 'push tag command:' + tag_push_command
 	def proc2 = tag_push_command.execute()
-	println 'push tag to git:done!'+proc2.text.trim()
+
 	
 }

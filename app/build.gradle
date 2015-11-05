@@ -29,7 +29,15 @@ android {
     }
     productFlavors {
     }
-	
+    signingConfigs {
+        release {
+            storeFile file("/Users/mac/Downloads/android-sdk-macosx/PrebuildAPP-tools/keystore/test.jks")
+            storePassword "android"
+            keyAlias "test"
+            keyPassword "android"
+        }
+
+    }
 
 }
 
