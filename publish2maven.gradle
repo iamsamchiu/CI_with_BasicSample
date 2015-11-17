@@ -16,24 +16,23 @@ publishing {
             *
             * 3.add parameters for each properties on jenkins if your job will be executed on jenkins.
             */ 
-            if (project.hasProperty("MAVEN_SERVERHOST") && project.hasProperty("MAVEN_USERNAME") && project.hasProperty("MAVEN_PASSWORD")){
-				url System.getenv("MAVEN_SERVERHOST") ?: "${project.getProperty('MAVEN_SERVERHOST')}"
-				
-	            credentials {
-	                username System.getenv("MAVEN_USERNAME") ?: "${project.getProperty('MAVEN_USERNAME')}"
-	                password System.getenv("MAVEN_PASSWORD") ?: "${project.getProperty('MAVEN_PASSWORD')}"
-	            }
-			}else{
-				url System.getenv("MAVEN_SERVERHOST") 
-				
-	            credentials {
-	                username System.getenv("MAVEN_USERNAME") 
-	                password System.getenv("MAVEN_PASSWORD")
-	            }
-			}
-			println 'publish2maven configuration, url:' + url
-			
-
+            
+            //get maven properties from gradle.properties
+            def property_url = project.hasProperty("MAVEN_SERVERHOST") ? project.getProperty('MAVEN_SERVERHOST'):"PLS_SETUP_MAVEN_URL"
+            def property_username = project.hasProperty("MAVEN_USERNAME") ? project.getProperty('MAVEN_USERNAME'):"PLS_SETUP_MAVEN_USERNAME"
+            def property_password = project.hasProperty("MAVEN_PASSWORD") ? project.getProperty('MAVEN_PASSWORD'):"PLS_SETUP_MAVEN_PASSWORD"
+            
+            
+            //use env variable as first priority if defined
+            url System.getenv("MAVEN_SERVERHOST") ?: property_url
+            credentials {
+                username System.getenv("MAVEN_USERNAME") ?: property_username
+                password System.getenv("MAVEN_PASSWORD") ?: property_password
+                logger.info('maven configuration,url:'+url)
+                logger.info('maven configuration,username:'+username)
+                logger.info('maven configuration,password:'+password)
+            }
+            
         }
         maven(MavenPublication) {
             groupId project.HDK_MAVEN_GROUPID
