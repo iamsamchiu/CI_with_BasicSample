@@ -78,9 +78,9 @@ public class SharedPreferencesHelper {
         Calendar dateOfBirth = Calendar.getInstance();
         dateOfBirth.setTimeInMillis(dobMillis);
         //###### this is a typo demo #######
-        //String email = mSharedPreferences.getString(KEY_NAME, "");
+        String email = mSharedPreferences.getString(KEY_NAME, "");
         //fix typo issue
-        String email = mSharedPreferences.getString(KEY_EMAIL, "");
+        //String email = mSharedPreferences.getString(KEY_EMAIL, "");
         
         // Create and fill a SharedPreferenceEntry model object.
         return new SharedPreferenceEntry(name, dateOfBirth, email);
